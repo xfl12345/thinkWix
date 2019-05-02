@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>developHTMLonline</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--
+        <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js">
+        </script>
+    -->
+   <script src="/js/jquery-1.9.1.min.js"></script>
+   <script src="/js/thinkWixUIinit.js"></script>
+<style>
+/*定义菜单栏的样式*/
+.menuBarY,.menuBarX{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    list-style-image: none;
+    border-style: none;
+    display: inline-block;
+    background-color:skyblue;
+}
+.menuBarXEle{
+    float: left;
+    margin: 0px 7px 0px 7px;
+}
+.menuBarYEle{
+    margin: 0px 0px 0px 0px;
+}
+.menuBarYEle{
+    position: relative;
+}
+.menuBarXEle,.menuBarYEle{
+    /*position: relative;*/
+    color: white;
+    font-size: 50px;  /*double char total width:124px,chinese char have 1px margin*/
+    font-family: '楷体';
+    border-style: solid;
+    border-width: 3px;
+    border-color: hotpink;
+}
+/*鼠标悬浮于菜单内部元素时，元素高亮*/
+.menuBarXEle:hover,.menuBarYEle:hover{
+    background-color: white;
+    color: skyblue;
+    border-color: yellow;
+}
+.menuBarXEle:first-child{
+    margin: 0px 7px 0px 0px; 
+}
+.menuBarXEle:last-child{
+    margin: 0px 0px 0px 7px; 
+}
+.menuBarY > li > ul,.menuBarX > li > ul{
+    white-space:nowrap;
+}
+/*鼠标悬浮时，展开自动相应的二级菜单*/
+.menuBarX > li:hover > ul,
+    .menuBarY > li:hover > ul{
+    display: block;
+}
+/*定义二级菜单样式*/
+.menu2ndBar{
+    position: absolute;
+    margin: 0px 0px 0px 0px;
+    padding: 0px;
+    list-style: none;
+    list-style-image: none;
+    background-color: hotpink;
+    border-style: solid;
+    border-color: hotpink;
+    border-width: 3px;
+    color: white;
+    display: none;
+}
+/*鼠标悬浮于二级菜单内部元素时，元素高亮*/
+.menu2ndBar > li:hover{
+    background-color: white;
+    color: skyblue;
+}
+/*定义实时显示网页作品的窗口外框*/
+#fullTimeDisplaySpaceOuterBox{
+    position: absolute;
+    height: 50%;
+    width: 50%;
+    right: 0px;
+    bottom: 0px;
+    border-style: solid;
+    border-color: hotpink;
+    border-width: 1px;
+}
+.fullTimeDisplaySpace{
+    border-style: dotted;
+    border-width: 3px;
+    border-color: blue;
+}
+</style>
+</head>
+<body>
+    <div id="navMenuDiv">
+        <ul id="navMenuBar_1" class="menuBarX">
+            <li id="navMenuBarEle_1" class="menuBarXEle" onclick="navMenuChoice(1);">开始
+                <ul id="menu2ndBar_1" class="menu2ndBar">
+                    <li onclick="navMenuChoice('A');">
+                        新建网页
+                    </li>
+                    <li onclick="navMenuChoice('B');">
+                        切换网页
+                    </li>
+                    <li onclick="navMenuChoice('C');">
+                        删除网页
+                    </li>
+                    <li onclick="navMenuChoice('D');">
+                        剪切元素
+                    </li>
+                    <li onclick="navMenuChoice('E');">
+                        复制元素
+                    </li>
+                    <li onclick="navMenuChoice('F');">
+                        粘贴元素
+                    </li>
+                </ul>
+            </li>
+            <li id="navMenuBarEle_2" class="menuBarXEle" onclick="navMenuChoice(2);">选择</li>
+            <li id="navMenuBarEle_3" class="menuBarXEle" onclick="navMenuChoice(3);">查找
+                <ul id="menu2ndBar_3" class="menu2ndBar">
+                    <li onclick="navMenuChoice('A');">
+                        字段
+                    </li>
+                    <li onclick="navMenuChoice('B');">
+                        元素
+                    </li>
+                </ul>
+            </li>
+            <li id="navMenuBarEle_4" class="menuBarXEle" onclick="navMenuChoice(4);">终端</li>
+            <li id="navMenuBarEle_5" class="menuBarXEle" onclick="navMenuChoice(5);">模式</li>
+            <li id="navMenuBarEle_6" class="menuBarXEle" onclick="navMenuChoice(6);">帮助
+                <ul class="menu2ndBar">
+                    <li>666
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <br>
+    <div id="toolBoxDiv" style="position: fixed;left: 0px;bottom: 0px;">
+        <div id="baseToolDiv">
+            <ul id="baseToolBar" class="menuBarY">
+                <li class="menuBarYEle" onclick="baseToolMenuChoice(1);">新建
+                    <ul class="menu2ndBar">
+                        <li onclick="navMenuChoice('A');">
+                            盒子div
+                        </li>
+                        <li onclick="navMenuChoice('B');">
+                            超链接a
+                        </li>
+                        <li onclick="navMenuChoice('C');">
+                            输入类input
+                        </li>
+                        <li onclick="navMenuChoice('D');">
+                            按钮button
+                        </li>
+                        <li onclick="navMenuChoice('E');">
+                            表格table
+                        </li>
+                        <li onclick="navMenuChoice('F');">
+                            字段span
+                        </li>
+                    </ul>
+                </li>
+                <li class="menuBarYEle" onclick="baseToolMenuChoice(2);">
+                    编辑
+                </li>
+                <li class="menuBarYEle" onclick="baseToolMenuChoice(3);">
+                    删除
+                </li>
+                <li class="menuBarYEle" onclick="baseToolMenuChoice(4);">
+                    移动
+                </li>
+                <li class="menuBarYEle" onclick="baseToolMenuChoice(5);">
+                    复制
+                </li>
+                <li class="menuBarYEle" onclick="baseToolMenuChoice(6);">
+                    粘贴
+                </li>
+                <li class="menuBarYEle" onclick="baseToolMenuChoice(7);">
+                    剪切
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="fullTimeDisplaySpaceOuterBox">
+        <div id="fullTimeDisplaySpace" class="fullTimeDisplaySpace">
+        </div>
+    </div>
+    <div style="position: fixed;top: 0px;right: 0px;">
+        <span>debug</span><br>
+        <div id="jsDebug"></div>
+    </div>
+</body>
+<script>
+window.onload=function(){
+    mainStart();
+};
+function navMenuChoice(choice){
+    switch(choice)
+    {
+        case 1:
+
+            break;
+        case 2: break;
+        case 3: break;
+        case 4: break;
+        case 5: break;
+        case 6: break;
+        default:break;
+    }
+}
+
+
+function createAElement(nameOfElement){
+    return document.createElement(nameOfElement);
+}
+</script>
+</html>
