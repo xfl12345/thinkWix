@@ -1,4 +1,6 @@
 var debugOutputDiv;
+var windowsH = document.documentElement.clientHeight;
+var windowsW = document.documentElement.clientWidth;
 function debugLogPush(pushString){
 	if(debugOutputDiv != null)
 	{
@@ -7,43 +9,79 @@ function debugLogPush(pushString){
 }
 function mainStart(){
 	debugOutputDiv=document.getElementById("jsDebug");
+	debugLogPush("windowsH:"+windowsH);
+	debugLogPush("windowsW:"+windowsW);
 	menuBarInit();
+	lanuchHelperModules();
 }
 function menuBarInit(){
 	menuSecondBarYPosInit();
-	//debugLogPush("doing");
 	console.log("menuBarInit_Done!");
 }
 function menuSecondBarYPosInit(){
 	var menuBarY = document.getElementsByClassName("menuBarY");
 	for(var i=0; i<menuBarY.length ; i++)
 	{
+		menuBarY[i].classList.add("posInitStyle");
 		var barEle = menuBarY[i].getElementsByClassName("menu2ndBar");
-		for(var i2=0,eleParentNode,pnTop,pnLeft,pnId,pnStyle ;  i2<barEle.length ;i2++)
+		var menuBarYH = menuBarY[i].offsetHeight;
+		//debugLogPush(menuBarYH);
+		for(var i2=0;  i2<barEle.length ;i2++)
 		{
-			eleParentNode = barEle[i2].parentNode;
-			if(eleParentNode.getAttribute("class")=="menuBarYEle")
+			var pnNode = barEle[i2].parentNode;
+			if(barEle[i2].getAttribute("id") == null)
 			{
-				pnId=barEle[i2].getAttribute("id");
-				if(pnId == null)
-				{
-					barEle[i2].setAttribute("id","menu2ndBarTmpId_"+(i2+1));
-					pnId = barEle[i2].getAttribute("id");
-				}
-				pnTop=eleParentNode.offsetHeight;
-				pnLeft=eleParentNode.offsetLeft;
-				pnStyle=getComputedStyle(eleParentNode,null);
-				barEle[i2].style.left = pnStyle.width ;
-				alert(document.documentElement.clientHeight);
-				barEle[i2].style.top = pnStyle.top ;
-				debugLogPush("menu2ndBarY_No."+(i2+1)+",EleId:"+pnId+",top:"+pnTop+",left:"+pnLeft+",width:"+pnStyle.width+",height:"+pnStyle.height+";");
-				
+				barEle[i2].setAttribute("id","menu2ndBarTmpId_"+(i2+1));
 			}
+			/**获取一级菜单的宽度以使二级菜单的左边对齐一级菜单的右边缘
+			 * 获取二级菜单的高度和浏览器可视范围（宽和高）以使二级菜单尽量少被遮挡
+			 * 获取一级菜单的元素在其菜单栏里的高度以使二级菜单定位美化
+			 */
+			//pnStyle=getComputedStyle(eleParentNode,null);
+			var pnWidth = pnNode.offsetWidth;
+			var pnHeight = pnNode.offsetHeight;
+			var barEleChild = barEle[i2].lastElementChild;
+			barEle[i2].classList.add("posInitStyle");
+
+			//debugLogPush(barEleChild.tagName);
+			//debugLogPush(barEleChild.innerHTML);
+			barEle[i2].style.left = pnWidth + "px";
+			barEleH = barEle[i2].offsetHeight;
+			barEleChildH = barEleChild.offsetHeight;
+			
+			var relativeTopFreeH = menuBarY[i].getBoundingClientRect().top + pnNode.offsetTop;
+			var relativeBottomFreeH = windowsH - relativeTopFreeH;
+
+			/*
+			debugLogPush("menuBarY距顶高度="+menuBarY[i].getBoundingClientRect().top + "px");
+			debugLogPush("barEle["+i2+"].offsetHeight="+barEleH);
+			debugLogPush("barEleChildH.offsetHeight="+barEleChildH);
+			debugLogPush("barEle父元素距顶高度剩余空间="+relativeTopFreeH+"px");
+			debugLogPush("barEle父元素距底高度剩余空间="+relativeBottomFreeH+"px");
+			*/
+
+			if(barEleH <= relativeTopFreeH)
+			{
+				barEle[i2].style.bottom = 0 +"px";
+				//barEle[i2].style.top = -barEleH + "px";
+			}
+			else if(barEleH <= windowsH)
+			{
+				barEle[i2].style.bottom = (-relativeBottomFreeH + barEleChildH) + "px";
+			}
+			else
+			{
+				barEle[i2].style.top = (-relativeTopFreeH) + "px";
+				barEle[i2].style.height = windowsH +"px";
+			}
+			barEle[i2].classList.remove("posInitStyle");
 		}
+		menuBarY[i].classList.remove("posInitStyle");
 	}
 		
-    //debugLogPush("done!");    
+    //debugLogPush("done!");
 }
+/*
 function getEleStyleTop(ele){
 	if(ele == null)
 	{
@@ -59,3 +97,4 @@ function getEleStyleTop(ele){
 		return ele.currentStyle.top;
 	}
 }
+*/
