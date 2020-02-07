@@ -1,0 +1,28 @@
+/*主要为隐形计算提供便利*/
+.posInitStyle{
+    display: block;
+    visibility: hidden;
+    pointer-events: none;
+}
+/*定义左下角悬浮工具栏样式*/
+#toolBoxDiv{
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+}
+/*定义实时显示网页作品的窗口外框*/
+#fullTimeDisplaySpaceOuterBox{
+    position: absolute;
+    height: 50%;
+    width: 50%;
+    right: 0px;
+    bottom: 0px;
+    border-style: solid;
+    border-color: hotpink;
+    border-width: 1px;
+}
+.fullTimeDisplaySpace{
+    border-style: dotted;
+    border-width: 3px;
+    border-color: blue;
+}
